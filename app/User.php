@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'email', 'password',
     ];
 
     /**
@@ -25,6 +25,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
+
+    public function createApiKey()
+    {
+        do {
+            $this->api_token = str_random(60);
+        } while ($this->where('api_token', $this->api_token)->exists());
+        
+        $this->save();
+    }
 }
