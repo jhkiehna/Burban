@@ -10,6 +10,11 @@ use App\Http\Resources\DealCollection;
 
 class DealController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Deal::class, 'deal');
+    }
+
     public function index()
     {
         return new DealCollection(Deal::paginate());

@@ -72,4 +72,34 @@ class DealTest extends TestCase
         $response->assertJsonFragment(['title' => 'testDeal2']);
         $this->assertDatabaseHas('deals', ['title' => 'testDeal2']);
     }
+
+    public function testABusinessCantEditTheDealsOfAnotherBusiness()
+    {
+        $business = factory(Business::class)->create();
+        $deal = factory(Deal::class)->create([
+            'business_id' => $business->id
+        ]);
+
+        $business2 = factory(Business::class)->create();
+
+        $response = $this->actingAs($business2->user)->json('PATCH', '/deals/'. $deal->id, [
+            'title' => 'testDeal2',
+        ]);
+
+        $response->assertStatus(403);
+        $this->assertDatabaseMissing('deals', ['title' => 'testDeal2']);
+    }
+
+    public function testARegularUserCantCreateADeal()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)->json('POST', '/deals/', [
+            'title' => 'testDeal',
+            'description' => 'test Description',
+        ]);
+
+        $response->assertStatus(403);
+        $this->assertDatabaseMissing('deals', ['title' => 'testDeal']);
+    }
 }

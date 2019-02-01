@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Business;
 use Illuminate\Database\Eloquent\Model;
 
 class Deal extends Model
@@ -13,6 +14,6 @@ class Deal extends Model
 
     public function business()
     {
-        return $this->belongsTo(Deal::class);
+        return $this->belongsTo(Business::class);
     }
 }
