@@ -18,7 +18,7 @@ use Faker\Generator as Faker;
 $factory->define(Deal::class, function (Faker $faker) {
     return [
         'business_id' => factory(Business::class)->lazy(),
-        'title' => $faker->realText(30),
-        'description' => $faker->realText(100),
+        'title' => $faker->sentence(2),
+        'description' => $faker->sentence(6),
     ];
 });

@@ -21,9 +21,9 @@ $factory->define(Business::class, function (Faker $faker) {
         'user_id' => factory(User::class)->lazy(),
         'city' => $faker->city(),
         'state' => $faker->stateAbbr(),
-        'coordinates' => $faker->text(10),
-        'phone' => $faker->text(10),
-        'summary' => $faker->realText(200),
-        'image' => $faker->text(10),
+        'coordinates' => $faker->longitude().', '.$faker->latitude(),
+        'phone' => $faker->phoneNumber(),
+        'summary' => $faker->sentences(3, true),
+        'image' => $faker->url(),
     ];
 });
