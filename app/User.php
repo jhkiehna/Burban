@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Business;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,6 +28,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function business()
+    {
+        return $this->hasOne(Business::class);
+    }
 
     public function createApiKey()
     {

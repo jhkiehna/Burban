@@ -22,8 +22,7 @@ class CreateDealsTable extends Migration
 
             $table->softDeletes();
 
-            $table->foreign('business_id')
-                ->references('id')->on('businesses');
+            $table->foreign('business_id')->references('id')->on('businesses');
         });
     }
 

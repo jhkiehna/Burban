@@ -8,7 +8,7 @@ use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class DealTest extends TestCase
+class BusinessTest extends TestCase
 {
     public function testItCanReturnAListOfBusinesses()
     {

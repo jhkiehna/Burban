@@ -20,6 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('/deals')->group(function() {
     Route::get('/', 'DealController@index');
     Route::get('/{deal}', 'DealController@show');
+
+    Route::middleware('auth:api')->post('/', 'DealController@store');
+    Route::middleware('auth:api')->patch('/{deal}', 'DealController@update');
 });
 
 Route::prefix('/businesses')->group(function() {

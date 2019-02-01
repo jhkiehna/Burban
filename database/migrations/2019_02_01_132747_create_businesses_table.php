@@ -15,6 +15,7 @@ class CreateBusinessesTable extends Migration
     {
         Schema::create('businesses', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('user_id');
             $table->string('name');
             $table->string('city');
             $table->string('state', 2);
@@ -25,6 +26,8 @@ class CreateBusinessesTable extends Migration
             $table->timestamps();
             
             $table->softDeletes();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
