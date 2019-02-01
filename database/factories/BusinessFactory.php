@@ -1,6 +1,5 @@
 <?php
 
-use App\Deal;
 use App\Business;
 use Faker\Generator as Faker;
 
@@ -15,10 +14,14 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(Deal::class, function (Faker $faker) {
+$factory->define(Business::class, function (Faker $faker) {
     return [
-        'business_id' => factory(Business::class)->lazy(),
-        'title' => $faker->realText(30),
-        'description' => $faker->realText(100),
+        'name' => $faker->company(),
+        'city' => $faker->city(),
+        'state' => $faker->stateAbbr(),
+        'coordinates' => $faker->text(10),
+        'phone' => $faker->text(10),
+        'summary' => $faker->realText(200),
+        'image' => $faker->text(10),
     ];
 });
