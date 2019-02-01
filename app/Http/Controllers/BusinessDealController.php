@@ -10,7 +10,7 @@ class BusinessDealController extends Controller
 {
     public function index(Business $business)
     {
-        return new DealCollection($business->deals());
+        return new DealCollection($business->deals()->paginate());
     }
 
     /**

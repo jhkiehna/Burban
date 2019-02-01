@@ -23,5 +23,6 @@ Route::prefix('/deals')->group(function() {
 });
 
 Route::prefix('/businesses')->group(function() {
+    Route::get('/{business}', 'BusinessController@show');
     Route::get('/{business}/deals', 'BusinessDealController@index');
 });
