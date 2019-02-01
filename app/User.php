@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Deal;
 use App\Business;
+use App\SavedDeal;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -32,6 +34,11 @@ class User extends Authenticatable
     public function business()
     {
         return $this->hasOne(Business::class);
+    }
+
+    public function savedDeals()
+    {
+        return $this->hasMany(SavedDeal::class);
     }
 
     public function createApiKey()
