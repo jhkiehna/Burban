@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return Auth::user();
 });
+
+Route::prefix('/deals')->group(function() {
+    Route::get('/', 'DealController@index');
+    Route::get('/{deal}', 'DealController@show');
+});
