@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DealResource;
 use App\Deal;
 use App\SavedDeal;
 use Illuminate\Http\Request;
@@ -18,21 +19,16 @@ class SavedDealController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $deal = auth()->user()->savedDeals()->create($request->all());
+
+        return new DealResource($deal);
     }
 
-    public function show($id)
+    public function destroy($dealId)
     {
-        //
-    }
+        $savedDeal = auth()->user()->savedDeals()->where('deal_id', $dealId)->firstOrFail();
+        $savedDeal->delete();
 
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
+        return response(null, 204);
     }
 }

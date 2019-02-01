@@ -23,6 +23,9 @@ Route::prefix('/deals')->group(function() {
     Route::get('/{deal}', 'DealController@show');
     Route::middleware('auth:api')->post('/', 'DealController@store');
     Route::middleware('auth:api')->patch('/{deal}', 'DealController@update');
+
+    Route::middleware('auth:api')->post('/saved', 'SavedDealController@store');
+    Route::middleware('auth:api')->delete('/saved/{dealId}', 'SavedDealController@destroy');
 });
 
 Route::prefix('/businesses')->group(function() {
