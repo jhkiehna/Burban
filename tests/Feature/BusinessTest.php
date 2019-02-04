@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class BusinessTest extends TestCase
 {
-    public function testItCanReturnAListOfBusinesses()
+    public function testItCanReturnABusinesses()
     {
         $business = factory(Business::class)->create();
 
