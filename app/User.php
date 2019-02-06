@@ -55,9 +55,4 @@ class User extends Authenticatable
     {
         return Hash::check($password, $this->password);
     }
-
-    public function checkToken($token)
-    {
-        return $this->api_token == $token;
-    }
 }
