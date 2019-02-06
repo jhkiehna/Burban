@@ -21,10 +21,25 @@ class LoginTest extends TestCase
         ];
 
         $response = $this->json('POST', '/user/login', $payload);
-
         $user->refresh();
+
         $response->assertStatus(200);
         $response->assertJsonFragment(['api_token' => $user->api_token]);
+    }
+
+    public function testBadEmailAddressFailsValidation()
+    {
+        $user = factory(User::class)->create();
+
+        $payload = [
+            'email' => 'WrongEmail@wrong.net',
+            'password' => 'testPass'
+        ];
+
+        $response = $this->json('POST', '/user/login', $payload);
+
+        $response->assertStatus(422);
+        $response->assertJsonFragment(['email' => ['We have no users with that email address']]);
     }
 
     public function testAUserCantLoginWithBadPassword()

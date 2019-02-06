@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserResource;
 
 class LoginController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         $user = User::where('email', $request->email)->firstOrFail();
         
@@ -24,8 +25,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        $user = auth()->user();
-        $user->generateApiToken();
+        auth()->user()->generateApiToken();
 
         return response(null, 204);
     }
