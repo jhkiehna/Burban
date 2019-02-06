@@ -8,23 +8,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
-    public function testRouteCanReturnUserBasedOnApiToken()
-    {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)->json('GET', '/user');
-
-        $response->assertStatus(200);
-        $response->assertJsonFragment(['email' => $user->email]);
-    }
-
     public function testReturnsUnauthorizedResponseWhenTokenIsWrong()
     {
         $user = factory(User::class)->create();
 
         $response = $this->withHeaders([
             'Authorization' => 'Bearer '. 'asfsafsadfasf'
-        ])->json('GET', '/user');
+        ])->json('GET', '/deals/saved');
 
         $response->assertStatus(401);
     }

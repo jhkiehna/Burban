@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return Auth::user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return Auth::user();
+// });
 
 Route::prefix('/deals')->group(function() {
     Route::get('/', 'DealController@index');
@@ -31,4 +31,8 @@ Route::prefix('/deals')->group(function() {
 Route::prefix('/businesses')->group(function() {
     Route::get('/{business}', 'BusinessController@show');
     Route::get('/{business}/deals', 'BusinessDealController@index');
+});
+
+Route::prefix('/user')->group(function() {
+    Route::post('/login', 'LoginController@login');
 });

@@ -8,6 +8,7 @@ use App\SavedDeal;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -48,5 +49,15 @@ class User extends Authenticatable
         } while ($this->where('api_token', $this->api_token)->exists());
         
         $this->save();
+    }
+
+    public function checkPassword($password)
+    {
+        return Hash::check($password, $this->password);
+    }
+
+    public function checkToken($token)
+    {
+        return $this->api_token == $token;
     }
 }
