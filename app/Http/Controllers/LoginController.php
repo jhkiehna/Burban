@@ -25,7 +25,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        auth()->user()->generateApiToken();
+        auth()->user()->api_token = null;
 
         return response(null, 204);
     }
