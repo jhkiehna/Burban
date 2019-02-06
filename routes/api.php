@@ -36,4 +36,6 @@ Route::prefix('/businesses')->group(function() {
 Route::prefix('/user')->group(function() {
     Route::post('/login', 'LoginController@login');
     Route::middleware('auth:api')->get('/logout', 'LoginController@logout');
+
+    Route::post('/register', 'RegistrationController@register');
 });
