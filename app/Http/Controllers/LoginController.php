@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -12,12 +12,20 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->firstOrFail();
         
         if($user->checkPassword($request->password)) {
-            $user->createApiKey();
+            $user->generateApiToken();
             $user->refresh();
 
             return response($user, 200);
         }
 
         return response(['error' => 'Invalid email or password'], 401);
+    }
+
+    public function logout(Request $request)
+    {
+        $user = auth()->user();
+        $user->generateApiToken();
+
+        return response(null, 204);
     }
 }

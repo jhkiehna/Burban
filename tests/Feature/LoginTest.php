@@ -43,4 +43,13 @@ class LoginTest extends TestCase
         $response->assertStatus(401);
         $response->assertJsonFragment(['error' => 'Invalid email or password']);
     }
+
+    public function testAUseCanLogOut()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)->json('GET', '/user/logout');
+
+        $response->assertStatus(204);
+    }
 }

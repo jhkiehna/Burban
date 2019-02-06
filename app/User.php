@@ -42,7 +42,7 @@ class User extends Authenticatable
         return $this->hasMany(SavedDeal::class);
     }
 
-    public function createApiKey()
+    public function generateApiToken()
     {
         do {
             $this->api_token = str_random(60);
