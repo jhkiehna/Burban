@@ -13,10 +13,7 @@ class LoginController extends Controller
     {
         $user = User::where('email', $request->email)->firstOrFail();
         
-        if($user->checkPassword($request->password)) {
-            $user->generateApiToken();
-            $user->refresh();
-
+        if($user->authenticate($request->password)) {
             return new UserResource($user);
         }
 

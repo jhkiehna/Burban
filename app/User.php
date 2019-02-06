@@ -51,8 +51,13 @@ class User extends Authenticatable
         $this->save();
     }
 
-    public function checkPassword($password)
+    public function authenticate($password)
     {
-        return Hash::check($password, $this->password);
+        if (Hash::check($password, $this->password)) {
+            $this->generateApiToken();
+            return true;    
+        }
+        
+        return false;
     }
 }
