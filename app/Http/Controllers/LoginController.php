@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 
 class LoginController extends Controller
 {
@@ -15,7 +16,7 @@ class LoginController extends Controller
             $user->generateApiToken();
             $user->refresh();
 
-            return response($user, 200);
+            return new UserResource($user);
         }
 
         return response(['error' => 'Invalid email or password'], 401);
