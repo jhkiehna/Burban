@@ -6,23 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class BusinessRequest extends FormRequest
 {
-    public function authorize()
-    {   
-        switch ($this->method()) {
-            case 'POST':
-                return auth()->user()->business_user;
-                break;
-            case 'PATCH':
-                return auth()->user()->business_user && auth()->user()->id == $this->business->user_id;
-                break;
-            case 'DELETE':
-                return auth()->user()->business_user && auth()->user()->id == $this->business->user_id;
-                break;
-            default:
-                return false;
-        }
-    }
-
     public function rules()
     {
         switch ($this->method()) {
@@ -57,22 +40,28 @@ class BusinessRequest extends FormRequest
             case 'PATCH':
                 return [
                     'name' => [
-                        'required'
+                        'string',
+                        'unique:businesses',
+                        'max:255',
                     ],
                     'city' => [
-                        'required'
+                        'string',
+                        'max:255',
                     ],
                     'state' => [
-                        'required'
+                        'string',
+                        'max:2'
                     ],
                     'phone' => [
-                        'required'
+                        'string',
                     ],
                     'summary' => [
-                        'required'
+                        'string',
                     ],
                 ];
                 break;
+            case 'DELETE':
+                return [];
         }
     }
 

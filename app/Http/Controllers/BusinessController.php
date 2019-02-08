@@ -9,6 +9,11 @@ use App\Http\Requests\BusinessRequest;
 
 class BusinessController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Business::class, 'business');
+    }
+
     public function store(BusinessRequest $request)
     {
         $business = Business::createForUser(auth()->user()->id, $request);
