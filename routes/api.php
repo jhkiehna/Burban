@@ -19,23 +19,27 @@ use Illuminate\Http\Request;
 
 Route::prefix('/deals')->group(function() {
     Route::get('/', 'DealController@index');
-    Route::middleware('auth:api')->get('/saved', 'SavedDealController@index');
     Route::get('/{deal}', 'DealController@show');
     Route::middleware('auth:api')->post('/', 'DealController@store');
     Route::middleware('auth:api')->patch('/{deal}', 'DealController@update');
-
+    
+    Route::middleware('auth:api')->get('/saved', 'SavedDealController@index');
     Route::middleware('auth:api')->post('/saved', 'SavedDealController@store');
     Route::middleware('auth:api')->delete('/saved/{dealId}', 'SavedDealController@destroy');
 });
 
 Route::prefix('/businesses')->group(function() {
     Route::get('/{business}', 'BusinessController@show');
+    Route::middleware('auth:api')->post('/', 'BusinessController@store');
+    Route::middleware('auth:api')->patch('/{business}', 'BusinessController@update');
+    Route::middleware('auth:api')->delete('/{business}', 'BusinessController@destroy');
+
     Route::get('/{business}/deals', 'BusinessDealController@index');
 });
 
 Route::prefix('/user')->group(function() {
     Route::post('/login', 'LoginController@login');
-    Route::middleware('auth:api')->get('/logout', 'LoginController@logout');
-
     Route::post('/register', 'RegistrationController@register');
+    
+    Route::middleware('auth:api')->get('/logout', 'LoginController@logout');
 });

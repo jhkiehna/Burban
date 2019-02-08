@@ -32,6 +32,17 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function isBusinessUser()
+    {
+        return $this->business_user;
+    }
+
+    public function makeBusinessUser()
+    {
+        $this->business_user = true;
+        $this->save();
+    }
+
     public function business()
     {
         return $this->hasOne(Business::class);

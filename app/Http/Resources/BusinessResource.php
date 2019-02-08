@@ -19,7 +19,6 @@ class BusinessResource extends JsonResource
             'name' => $this->name,
             'city' => $this->city,
             'state' => $this->state,
-            'coordinates' => $this->coordinates,
             'phone' => $this->phone,
             'summary' => $this->summary,
             'image' => $this->image,

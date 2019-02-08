@@ -19,10 +19,10 @@ class CreateBusinessesTable extends Migration
             $table->string('name');
             $table->string('city');
             $table->string('state', 2);
-            $table->string('coordinates');
+            $table->string('coordinates')->nullable();
             $table->string('phone');
             $table->string('summary');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
             
             $table->softDeletes();

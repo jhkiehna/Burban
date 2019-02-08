@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Business;
 use Illuminate\Http\Request;
 use App\Http\Resources\BusinessResource;
+use App\Http\Requests\BusinessRequest;
 
 class BusinessController extends Controller
 {
@@ -13,9 +14,11 @@ class BusinessController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(BusinessRequest $request)
     {
-        //
+        $business = Business::createForUser(auth()->user()->id, $request);
+
+        return new BusinessResource($business);
     }
 
     public function show(Business $business)
@@ -23,13 +26,17 @@ class BusinessController extends Controller
         return new BusinessResource($business);
     }
 
-    public function update(Request $request, $id)
+    public function update(BusinessRequest $request, Business $business)
     {
-        //
+        $business->update($request->all());
+
+        return response($business->refresh(), 200);
     }
 
-    public function destroy($id)
+    public function destroy(BusinessRequest $request, Business $business)
     {
-        //
+        $business->delete();
+        
+        return response(null, 204);
     }
 }
