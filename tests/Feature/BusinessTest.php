@@ -19,4 +19,101 @@ class BusinessTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonFragment(['name' => $business->name]);
     }
+
+    public function testABusinessCanCreateABusiness()
+    {
+        $user = factory(User::class)->create([
+            'business_user' => true
+        ]);
+
+        $requestData = [
+            'name' => 'Test Business',
+            'city' => 'Asheville',
+            'state' => 'NC',
+            'phone' => '5555555555',
+            'summary' => 'A quick description of the Test Business',
+        ];
+
+        $response = $this->actingAs($user)->json('POST', '/businesses/', $requestData);
+
+        $response->assertStatus(201);
+        $response->assertJsonFragment(['name' => $requestData['name']]);
+        $this->assertDatabaseHas('businesses', ['name' => $requestData['name']]);
+    }
+
+    public function testOnlyABusinessUserCanCreateABusiness()
+    {
+        $user = factory(User::class)->create([
+            'business_user' => false
+        ]);
+
+        $requestData = [
+            'name' => 'Test Business',
+            'city' => 'Asheville',
+            'state' => 'NC',
+            'phone' => '5555555555',
+            'summary' => 'A quick description of the Test Business',
+        ];
+
+        $response = $this->actingAs($user)->json('POST', '/businesses/', $requestData);
+
+        $response->assertStatus(403);
+        $this->assertDatabaseMissing('businesses', ['name' => $requestData['name']]);
+    }
+
+    public function testABusinessCanBeUpdated()
+    {
+        $user = factory(User::class)->create([
+            'business_user' => true
+        ]);
+
+        $business = factory(Business::class)->create([
+            'user_id' => $user->id
+        ]);
+
+        $requestData = [
+            'summary' => 'A different summary than the one before',
+        ];
+
+        $response = $this->actingAs($user)->json('PATCH', '/businesses/' . $business->id , $requestData);
+
+        $response->assertStatus(200);
+        $response->assertJsonFragment(['summary' => $requestData['summary']]);
+        $this->assertDatabaseHas('businesses', ['summary' => $requestData['summary']]);
+    }
+
+    public function testABusinessCanOnlybeUpdatedByTheUserWhoOwnsIt()
+    {
+        list($userOwner, $userNotOwner) = factory(User::class, 2)->create([
+            'business_user' => true
+        ]);
+
+        $business = factory(Business::class)->create([
+            'user_id' => $userOwner->id
+        ]);
+
+        $response = $this->actingAs($userNotOwner)->json(
+            'PATCH',
+            '/businesses/' . $business->id, 
+            ['name' => 'A Different Company']);
+
+        $response->assertStatus(403);
+        $this->assertDatabaseMissing('businesses', ['name' => 'A Different Company']);
+    }
+
+    public function testABusinessCanBeDestroyed()
+    {
+        $user = factory(User::class)->create([
+            'business_user' => true
+        ]);
+
+        $business = factory(Business::class)->create([
+            'user_id' => $user->id
+        ]);
+
+        $response = $this->actingAs($user)->json('DELETE', '/businesses/' . $business->id);
+
+        $response->assertStatus(204);
+        $this->assertDatabaseMissing('businesses', ['id' => $business->id]);
+    }
 }
