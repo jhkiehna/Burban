@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\User;
 use Tests\TestCase;
+use App\Events\NewUserRegistration;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -11,6 +12,8 @@ class RegistrationTest extends TestCase
 {
     public function testAUserCanRegisterForANewAccount()
     {
+        $this->expectsEvents(NewUserRegistration::class);
+
         $requestData = [
             'email' => 'testUser@test.test',
             'password' => 'testPass',

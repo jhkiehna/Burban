@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Events\NewUserRegistration;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\RegistrationRequest;
@@ -18,6 +19,7 @@ class RegistrationController extends Controller
         ]);
 
         $user->generateApiToken();
+        event(new NewUserRegistration($user));
 
         return new UserResource($user);
     }
