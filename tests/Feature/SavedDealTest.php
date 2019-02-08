@@ -19,6 +19,7 @@ class SavedDealTest extends TestCase
             'deal_id' => $deal->id,
         ]);
 
+
         $response = $this->actingAs($user)->json('GET', '/deals/saved');
 
         $response->assertStatus(200);
