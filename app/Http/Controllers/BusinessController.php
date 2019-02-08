@@ -9,11 +9,6 @@ use App\Http\Requests\BusinessRequest;
 
 class BusinessController extends Controller
 {
-    public function index()
-    {
-        //
-    }
-
     public function store(BusinessRequest $request)
     {
         $business = Business::createForUser(auth()->user()->id, $request);
@@ -30,7 +25,7 @@ class BusinessController extends Controller
     {
         $business->update($request->all());
 
-        return response($business->refresh(), 200);
+        return new BusinessResource($business);
     }
 
     public function destroy(BusinessRequest $request, Business $business)

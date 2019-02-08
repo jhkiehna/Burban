@@ -61,6 +61,27 @@ class BusinessTest extends TestCase
         $this->assertDatabaseMissing('businesses', ['name' => $requestData['name']]);
     }
 
+    public function testBusinessRequestClassValidatesData()
+    {
+        $user = factory(User::class)->create([
+            'business_user' => true
+        ]);
+
+        $requestData = [
+            'name' => 10,
+            'state' => 'North Carolina',
+            'summary' => 'A quick description of the Test Business',
+        ];
+
+        $response = $this->actingAs($user)->json('POST', '/businesses/', $requestData);
+
+        $response->assertStatus(422);
+        $response->assertJsonFragment(['name' => ['Name is an invalid data type']]);
+        $response->assertJsonFragment(['city' => ['You must specify the city that your business is located in']]);
+        $response->assertJsonFragment(['state' => ['Please use your State\'s 2 letter abbreviation']]);
+        $this->assertDatabaseMissing('businesses', ['summary' => $requestData['summary']]);
+    }
+
     public function testABusinessCanBeUpdated()
     {
         $user = factory(User::class)->create([
