@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66ca7343889332c2b8ecca11c251430c",
+    "content-hash": "23685c00afbb610dbf723409dd3a4092",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -839,6 +839,71 @@
                 "notifications"
             ],
             "time": "2018-12-04T12:57:08+00:00"
+        },
+        {
+            "name": "laravel/scout",
+            "version": "v7.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/scout.git",
+                "reference": "8177460f69cb1eb1d4ce857fdcd39a52c3c7c575"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/8177460f69cb1eb1d4ce857fdcd39a52c3c7c575",
+                "reference": "8177460f69cb1eb1d4ce857fdcd39a52c3c7c575",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/bus": "~5.4",
+                "illuminate/contracts": "~5.4",
+                "illuminate/database": "~5.4",
+                "illuminate/pagination": "~5.4",
+                "illuminate/queue": "~5.4",
+                "illuminate/support": "~5.4",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "algolia/algoliasearch-client-php": "^2.2",
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~6.0"
+            },
+            "suggest": {
+                "algolia/algoliasearch-client-php": "Required to use the Algolia engine (^2.2)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "7.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Scout\\ScoutServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Scout\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel Scout provides a driver based solution to searching your Eloquent models.",
+            "keywords": [
+                "algolia",
+                "laravel",
+                "search"
+            ],
+            "time": "2019-02-08T14:37:16+00:00"
         },
         {
             "name": "laravel/slack-notification-channel",
