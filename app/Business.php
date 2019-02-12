@@ -4,10 +4,13 @@ namespace App;
 
 use App\Deal;
 use App\User;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Business extends Model
 {
+    use Searchable;
+    
     protected $fillable = [
         'user_id',
         'name',
@@ -16,6 +19,13 @@ class Business extends Model
         'phone',
         'summary',
     ];
+    
+    protected $algoliaIndex = 'businesses_index';
+
+    public function serachableAs()
+    {
+        return $this->algoliaIndex;
+    }
 
     public function user()
     {

@@ -4,14 +4,24 @@ namespace App;
 
 use App\Business;
 use App\SavedDeal;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Deal extends Model
 {
+    use Searchable;
+
     protected $fillable = [
         'title',
         'description',
     ];
+    
+    protected $algoliaIndex = 'deals_index';
+
+    public function serachableAs()
+    {
+        return $this->algoliaIndex;
+    }
 
     public function business()
     {
