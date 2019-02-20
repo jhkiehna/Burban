@@ -13,12 +13,12 @@ class GoogleGeocoder
     protected $endpoint = 'https://maps.googleapis.com/maps/api/geocode/json?';
     protected $client;
 
-    public function __construct(Client $client, $apiKey = null,  $language = null, $region = null)
+    public function __construct(Client $client, $language = null, $region = null)
     {
         $this->client = $client;
-        $this->addOptionalQueryParameters($apiKey, $language, $region);
+        $this->endpoint = $this->buildQuery('key', config('geocoder.key'));
+        $this->addOptionalQueryParameters($language, $region);
     }
-
 
     public function geocode($address)
     {
@@ -50,12 +50,8 @@ class GoogleGeocoder
         return $this->buildResults($response['results']);
     }
 
-    private function addOptionalQueryParameters($apiKey, $language, $region)
+    private function addOptionalQueryParameters($language, $region)
     {
-        if ($apiKey) {
-            $this->endpoint = $this->buildQuery('key', $apiKey);
-        }
-
         if ($language) {
             $this->endpoint = $this->buildQuery('language', $language);
         }

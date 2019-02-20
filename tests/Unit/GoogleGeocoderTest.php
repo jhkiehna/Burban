@@ -99,7 +99,9 @@ class GoogleGeocoderTest extends TestCase
             ->shouldReceive('getBody')
             ->andReturn(TestGeocoderResponses::getCityResponse())
             ->getMock();
-        $geocoder = new GoogleGeocoder($spyClient, 'testkey', 'en', 'testregion');
+        
+        $geocoder = new GoogleGeocoder($spyClient, 'en', 'testregion');
+
         $geocoder->geocode('asheville');
     }
 
