@@ -28,6 +28,7 @@ class BusinessTest extends TestCase
 
         $requestData = [
             'name' => 'Test Business',
+            'street_address' => '123 fake street',
             'city' => 'Asheville',
             'state' => 'NC',
             'phone' => '5555555555',
@@ -49,6 +50,7 @@ class BusinessTest extends TestCase
 
         $requestData = [
             'name' => 'Test Business',
+            'street_address' => '123 fake street',
             'city' => 'Asheville',
             'state' => 'NC',
             'phone' => '5555555555',

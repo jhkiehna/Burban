@@ -14,6 +14,7 @@ class Business extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'street_address',
         'city',
         'state',
         'phone',
@@ -42,6 +43,7 @@ class Business extends Model
         return self::create([
             'user_id' => $userId,
             'name' => $request->name,
+            'street_address' => $request->street_address,
             'city' => $request->city,
             'state' => $request->state,
             'phone' => $request->phone,
