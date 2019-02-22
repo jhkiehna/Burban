@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\User;
 use App\Business;
 use App\SavedDeal;
 use Laravel\Scout\Searchable;
@@ -30,7 +31,7 @@ class Deal extends Model
 
     public function savedDeals()
     {
-        return $this->hasMany(SavedDeal::class);
+        return $this->belongsToMany(SavedDeal::class);
     }
 
     public static function forUser($user)

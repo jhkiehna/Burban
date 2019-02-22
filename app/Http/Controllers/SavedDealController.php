@@ -12,16 +12,12 @@ class SavedDealController extends Controller
 {
     public function index()
     {
-        $deals = Deal::forUser(auth()->user());
-
-        return new DealCollection($deals->paginate());
+        return new DealCollection(auth()->user()->savedDeals->map->deal);
     }
 
     public function store(Request $request)
     {
-        $deal = auth()->user()->savedDeals()->create($request->all());
-
-        return new DealResource($deal);
+        return new DealResource(auth()->user()->savedDeals()->create($request->all()));
     }
 
     public function destroy($dealId)
