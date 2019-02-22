@@ -13,9 +13,9 @@ class GoogleGeocoder
     protected $endpoint = 'https://maps.googleapis.com/maps/api/geocode/json?';
     protected $client;
 
-    public function __construct(Client $client, $language = null, $region = null)
+    public function __construct($language = null, $region = null)
     {
-        $this->client = $client;
+        $this->client = resolve(Client::class);
         $this->endpoint = $this->buildQuery('key', config('geocoder.key'));
         $this->addOptionalQueryParameters($language, $region);
     }
@@ -27,27 +27,7 @@ class GoogleGeocoder
             $this->getResponse($query)
         );
 
-        return $this->buildResults($response['results']);
-    }
-
-    public function reverseByPlaceId($placeId)
-    {
-        $query = $this->buildQuery('place_id', $placeId);
-        $response = $this->validateResponse(
-            $this->getResponse($query)
-        );
-
-        return $this->buildResults($response['results']);
-    }
-
-    public function reverseByCoordinates($latitude, $longitude)
-    {
-        $query = $this->buildQuery('address', "{$latitude},{$longitude}");
-        $response = $this->validateResponse(
-            $this->getResponse($query)
-        );
-
-        return $this->buildResults($response['results']);
+        return $response['results'][0]['place_id'];
     }
 
     private function addOptionalQueryParameters($language, $region)
@@ -96,46 +76,5 @@ class GoogleGeocoder
         }
 
         return $response;
-    }
-
-    private function buildResults($results)
-    {
-        return array_map(function ($result) {
-            $coordinates = $result['geometry']['location'];
-            $data = [
-                'address' => $result['formatted_address'],
-                'latitude' => $coordinates['lat'],
-                'longitude' => $coordinates['lng'],
-                'place_id' => $result['place_id'],
-                'types' => $result['types'],
-                'address_components' => $this->buildAddressComponents($result)
-            ];
-
-            if (isset($result['geometry']['bounds'])) {
-                $bounds = $result['geometry']['bounds'];
-                $data['bounds'] = [
-                    'northeast' => [
-                        'latitude' => $bounds['northeast']['lat'],
-                        'longitude' => $bounds['northeast']['lng'],
-                    ],
-                    'southwest' => [
-                        'latitude' => $bounds['southwest']['lat'],
-                        'longitude' => $bounds['southwest']['lng'],
-                    ]
-                ];
-            }
-
-            return $data;
-        }, $results);
-    }
-    private function buildAddressComponents($result)
-    {
-        $test = [];
-
-        foreach ($result['address_components'] as $component) {
-            $test[$component['types'][0]] = $component['long_name'];
-        }
-
-        return $test;
     }
 }

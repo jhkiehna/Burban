@@ -6,6 +6,7 @@ use App\Deal;
 use App\User;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use App\Services\Geocoder\GoogleGeocoder;
 
 class Business extends Model
 {
@@ -40,7 +41,7 @@ class Business extends Model
 
     public static function createForUser($userId, $request)
     {
-        return self::create([
+        $business = self::create([
             'user_id' => $userId,
             'name' => $request->name,
             'street_address' => $request->street_address,
@@ -49,5 +50,12 @@ class Business extends Model
             'phone' => $request->phone,
             'summary' => $request->summary,
         ]);
+
+        $address = $business->street_address . '\n' . $business->city . ', ' . $business->state;
+
+        $business->place_id = (new GoogleGeocoder())->geocode($address);
+        $business->save();
+
+        return $business;
     }
 }
