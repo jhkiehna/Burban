@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
@@ -13,31 +14,25 @@ class UserController extends Controller
     public function updatePassword(UserPasswordChangeRequest $request)
     {
         $user = auth()->user();
+        $this->authorize('update', $user);
 
-        if($user->authenticate($request->password) && $user->email == $request->email) {
-            $user->update([
-                'password' => Hash::make($request->new_password)
-            ]);
-            
-            return new UserResource($user);
-        }
+        $user->update([
+            'password' => Hash::make($request->new_password)
+        ]);
 
-        return response(['error' => 'Invalid email or password'], 401);
+        return new UserResource($user);
     }
 
     public function updateEmail(UserEmailChangeRequest $request)
     {
         $user = auth()->user();
+        $this->authorize('update', $user);
 
-        if($user->authenticate($request->password) && $user->email == $request->email) {
-            $user->update([
-                'email' => $request->new_email
-            ]);
-            
-            return new UserResource($user);
-        }
+        $user->update([
+            'email' => $request->new_email
+        ]);
 
-        return response(['error' => 'Invalid email or password'], 401);
+        return new UserResource($user);
     }
 
     public function destroy()

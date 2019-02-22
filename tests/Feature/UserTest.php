@@ -42,6 +42,20 @@ class UserTest extends TestCase
         $this->assertTrue($user->deleted_at != null);
     }
 
+    public function testItCantDeleteAUserWithTheWrongToken()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer thisIsABadToken'
+        ])->json('DELETE', '/user/delete');
+        
+        $user->refresh();
+
+        $response->assertStatus(401);
+        $this->assertTrue($user->deleted_at == null);
+    }
+
     public function testItCanUpdateAUsersPassword()
     {
         $user = factory(User::class)->create([
@@ -75,7 +89,7 @@ class UserTest extends TestCase
             'password_confirmation' => 'badPassword'
         ]);
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
         $this->assertTrue(Hash::check('oldTestPassword', $user->password));
     }
 
@@ -112,7 +126,7 @@ class UserTest extends TestCase
             'password' => 'badPassword',
         ]);
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
         $this->assertDatabaseHas('users', ['email' => 'oldTestEmail@test.com']);
     }
 }
