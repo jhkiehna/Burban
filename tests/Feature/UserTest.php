@@ -35,7 +35,7 @@ class UserTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user)->get('/user/delete');
+        $response = $this->actingAs($user)->json('DELETE', '/user/delete');
         $user->refresh();
 
         $response->assertStatus(204);
@@ -49,7 +49,7 @@ class UserTest extends TestCase
             'password' => Hash::make('oldTestPassword')
         ]);
 
-        $response = $this->actingAs($user)->json('POST', '/user/updatePassword', [
+        $response = $this->actingAs($user)->json('PATCH', '/user/updatePassword', [
             'email' => 'testEmail@test.com',
             'new_password' => 'newTestPassword',
             'password' => 'oldTestPassword',
@@ -68,7 +68,7 @@ class UserTest extends TestCase
             'password' => Hash::make('oldTestPassword')
         ]);
 
-        $response = $this->actingAs($user)->json('POST', '/user/updatePassword', [
+        $response = $this->actingAs($user)->json('PATCH', '/user/updatePassword', [
             'email' => 'testEmail@test.com',
             'new_password' => 'newTestPassword',
             'password' => 'badPassword',
@@ -86,7 +86,7 @@ class UserTest extends TestCase
             'password' => Hash::make('testPassword')
         ]);
 
-        $response = $this->actingAs($user)->json('POST', '/user/updateEmail', [
+        $response = $this->actingAs($user)->json('PATCH', '/user/updateEmail', [
             'email' => 'oldTestEmail@test.com',
             'new_email' => 'updatedTestEmail@test.com',
             'password' => 'testPassword',
@@ -106,7 +106,7 @@ class UserTest extends TestCase
             'password' => Hash::make('testPassword')
         ]);
 
-        $response = $this->actingAs($user)->json('POST', '/user/updateEmail', [
+        $response = $this->actingAs($user)->json('PATCH', '/user/updateEmail', [
             'email' => 'oldTestEmail@test.com',
             'new_email' => 'updatedTestEmail@test.com',
             'password' => 'badPassword',

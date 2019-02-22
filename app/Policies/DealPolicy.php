@@ -27,7 +27,7 @@ class DealPolicy
 
     public function delete(User $user, Deal $deal)
     {
-        //
+        return $user->id === $deal->business->user_id;
     }
 
     public function restore(User $user, Deal $deal)

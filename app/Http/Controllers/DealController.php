@@ -40,6 +40,8 @@ class DealController extends Controller
 
     public function destroy(Deal $deal)
     {
-        //
+        $deal->delete();
+
+        return response(null, 204);
     }
 }

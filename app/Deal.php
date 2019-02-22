@@ -7,10 +7,11 @@ use App\Business;
 use App\SavedDeal;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Deal extends Model
 {
-    use Searchable;
+    use Searchable, SoftDeletes;
 
     protected $fillable = [
         'title',

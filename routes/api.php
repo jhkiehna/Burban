@@ -26,6 +26,7 @@ Route::prefix('/deals')->group(function() {
     Route::get('/{deal}', 'DealController@show');
     Route::middleware('auth:api')->post('/', 'DealController@store');
     Route::middleware('auth:api')->patch('/{deal}', 'DealController@update');
+    Route::middleware('auth:api')->delete('/{deal}', 'DealController@destroy');
 });
 
 Route::prefix('/businesses')->group(function() {
@@ -42,7 +43,7 @@ Route::prefix('/user')->group(function() {
     Route::post('/register', 'RegistrationController@register');
     
     Route::middleware('auth:api')->get('/logout', 'LoginController@logout');
-    Route::middleware('auth:api')->get('/delete', 'UserController@destroy');
-    Route::middleware('auth:api')->post('/updatePassword', 'UserController@updatePassword');
-    Route::middleware('auth:api')->post('/updateEmail', 'UserController@updateEmail');
+    Route::middleware('auth:api')->delete('/delete', 'UserController@destroy');
+    Route::middleware('auth:api')->patch('/updatePassword', 'UserController@updatePassword');
+    Route::middleware('auth:api')->patch('/updateEmail', 'UserController@updateEmail');
 });
