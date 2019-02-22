@@ -13,14 +13,4 @@ class UserPolicy
     {
         return $user->authenticate(request()->password) && $user->email === request()->email;
     }
-
-    public function restore()
-    {
-        //
-    }
-
-    public function forceDelete()
-    {
-        //
-    }
 }

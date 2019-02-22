@@ -29,14 +29,4 @@ class BusinessPolicy
     {
         return $user->business_user && $user->id === $business->user_id;
     }
-
-    public function restore(User $user, Business $business)
-    {
-        //
-    }
-
-    public function forceDelete(User $user, Business $business)
-    {
-        //
-    }
 }

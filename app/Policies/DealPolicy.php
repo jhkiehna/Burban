@@ -29,14 +29,4 @@ class DealPolicy
     {
         return $user->id === $deal->business->user_id;
     }
-
-    public function restore(User $user, Deal $deal)
-    {
-        //
-    }
-
-    public function forceDelete(User $user, Deal $deal)
-    {
-        //
-    }
 }
