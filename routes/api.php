@@ -42,4 +42,7 @@ Route::prefix('/user')->group(function() {
     Route::post('/register', 'RegistrationController@register');
     
     Route::middleware('auth:api')->get('/logout', 'LoginController@logout');
+    Route::middleware('auth:api')->get('/delete', 'UserController@destroy');
+    Route::middleware('auth:api')->post('/updatePassword', 'UserController@updatePassword');
+    Route::middleware('auth:api')->post('/updateEmail', 'UserController@updateEmail');
 });
