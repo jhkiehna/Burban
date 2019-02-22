@@ -17,9 +17,10 @@ class CreateBusinessesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('name');
+            $table->string('street_address');
             $table->string('city');
             $table->string('state', 2);
-            $table->string('coordinates')->nullable();
+            $table->string('place_id')->nullable();
             $table->string('phone');
             $table->string('summary');
             $table->string('image')->nullable();

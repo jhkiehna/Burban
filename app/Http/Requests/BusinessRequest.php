@@ -17,6 +17,11 @@ class BusinessRequest extends FormRequest
                         'unique:businesses',
                         'max:255',
                     ],
+                    'street_address' => [
+                        'required',
+                        'string',
+                        'max:255',
+                    ],
                     'city' => [
                         'required',
                         'string',
@@ -42,6 +47,10 @@ class BusinessRequest extends FormRequest
                     'name' => [
                         'string',
                         'unique:businesses',
+                        'max:255',
+                    ],
+                    'street_address' => [
+                        'string',
                         'max:255',
                     ],
                     'city' => [
@@ -73,9 +82,13 @@ class BusinessRequest extends FormRequest
             'name.unique' => 'We already have a business with that name',
             'name.max' => 'Your business\'s name cannot be longet than 255 characters',
 
+            'street_address.required' => 'You must specify the street address of your business',
+            'street_address.string' => 'street_address is an invalid data type',
+            'street_address.max' => 'Your business\'s street address cannot be longer than 255 characters',
+
             'city.required' => 'You must specify the city that your business is located in',
             'city.string' => 'City is an invalid data type',
-            'city.max' => 'Your business\'s name cannot be longer than 255 characters',
+            'city.max' => 'Your business\'s city cannot be longer than 255 characters',
 
             'state.required' => 'You must specify the State that your business is located in',
             'state.string' => 'State is an invalid data type',

@@ -19,9 +19,10 @@ $factory->define(Business::class, function (Faker $faker) {
     return [
         'name' => $faker->company(),
         'user_id' => factory(User::class)->lazy(),
+        'street_address' => $faker->streetAddress(),
         'city' => $faker->city(),
         'state' => $faker->stateAbbr(),
-        'coordinates' => $faker->longitude().', '.$faker->latitude(),
+        'place_id' => $faker->md5(),
         'phone' => $faker->phoneNumber(),
         'summary' => $faker->sentences(3, true),
         'image' => $faker->url(),

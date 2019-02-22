@@ -2,14 +2,33 @@
 
 namespace Tests\Feature;
 
-use App\Business;
+use Mockery;
 use App\Deal;
 use App\User;
+use App\Business;
 use Tests\TestCase;
+use GuzzleHttp\Client;
+use Tests\TestGeocoderResponses;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class BusinessTest extends TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->app->extend(Client::class, function ($client) {
+            $mockClient = Mockery::mock($client)
+                ->shouldReceive('get')
+                ->once()
+                ->andReturnSelf()
+                ->shouldReceive('getBody')
+                ->andReturn(TestGeocoderResponses::getCityResponse());
+
+            return $mockClient->getMock();
+        });
+    }
+
     public function testItCanReturnABusinesses()
     {
         $business = factory(Business::class)->create();
@@ -20,7 +39,7 @@ class BusinessTest extends TestCase
         $response->assertJsonFragment(['name' => $business->name]);
     }
 
-    public function testABusinessCanCreateABusiness()
+    public function testABusinessUserCanCreateABusiness()
     {
         $user = factory(User::class)->create([
             'business_user' => true
@@ -28,6 +47,7 @@ class BusinessTest extends TestCase
 
         $requestData = [
             'name' => 'Test Business',
+            'street_address' => '123 fake street',
             'city' => 'Asheville',
             'state' => 'NC',
             'phone' => '5555555555',
@@ -49,6 +69,7 @@ class BusinessTest extends TestCase
 
         $requestData = [
             'name' => 'Test Business',
+            'street_address' => '123 fake street',
             'city' => 'Asheville',
             'state' => 'NC',
             'phone' => '5555555555',
