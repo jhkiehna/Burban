@@ -17,7 +17,7 @@ class UserEmailVerificationTest extends TestCase
         $response = $this->json('GET', '/user/verify-email?api_token=' . $user->api_token);
         $user->refresh();
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
         $this->assertTrue($user->email_verified);
         $this->assertNotNull($user->email_verified_at);
     }

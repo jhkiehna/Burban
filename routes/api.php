@@ -44,6 +44,5 @@ Route::prefix('/user')->group(function() {
     Route::middleware(['auth:api', 'verified'])->patch('/updateEmail', 'UserController@updateEmail');
 
     Route::middleware('auth:api')->get('/verify-email', 'EmailVerificationController@index');
+    // Route::get('/verify-email', 'EmailVerificationController@index');
 });
-
-Route::get('email-test', 'EmailTestController@index');

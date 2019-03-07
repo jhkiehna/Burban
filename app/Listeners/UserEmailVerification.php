@@ -7,14 +7,10 @@ use App\Mail\UserEmailVerificationMail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UserEmailVerification
+class UserEmailVerification implements ShouldQueue
 {
-    /**
-     * Handle the event.
-     *
-     * @param  object  $event
-     * @return void
-     */
+    use InteractsWithQueue;
+
     public function handle($event)
     {
         $mailObject = new UserEmailVerificationMail($event->user);

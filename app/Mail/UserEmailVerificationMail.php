@@ -6,7 +6,6 @@ use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class UserEmailVerificationMail extends Mailable
 {
@@ -26,10 +25,11 @@ class UserEmailVerificationMail extends Mailable
      */
     public function build()
     {
-        //Build an email verification url here
+        $link = url('user/verify-email') . '?api_token=' . $user->api_token;
 
-        return $this->from('Hello@Buban.com')
-            ->view('view.name')
-            ->text('view_text.name');
+        return $this->from(config('mail.from'))
+            ->view('email.UserVerificationEmail')
+            ->text('email.UserVerificationEmailText')
+            ->with(['verificationLink' => $link]);
     }
 }
