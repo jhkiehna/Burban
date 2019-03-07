@@ -4,12 +4,21 @@ namespace Tests\Feature;
 
 use App\Deal;
 use App\User;
+use App\Business;
+use App\SavedDeal;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\SavedDeal;
 
 class SavedDealTest extends TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        Deal::disableSearchSyncing();
+        Business::disableSearchSyncing();
+    }
+
     public function testItAUserCanViewedTheirSavedDeals()
     {
         $user = factory(User::class)->create();

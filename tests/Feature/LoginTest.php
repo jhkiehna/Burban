@@ -38,8 +38,8 @@ class LoginTest extends TestCase
 
         $response = $this->json('POST', '/user/login', $payload);
 
-        $response->assertStatus(422);
-        $response->assertJsonFragment(['email' => ['We have no users with that email address']]);
+        $response->assertStatus(401);
+        $response->assertJsonFragment(['Invalid email or password']);
     }
 
     public function testAUserCantLoginWithBadPassword()

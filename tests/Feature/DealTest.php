@@ -10,6 +10,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DealTest extends TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        Deal::disableSearchSyncing();
+        Business::disableSearchSyncing();
+    }
+
     public function testItCanReturnAListOfDeals()
     {
         $deal = factory(Deal::class)->create();

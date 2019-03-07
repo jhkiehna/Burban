@@ -11,10 +11,12 @@ class LoginController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        $user = User::where('email', $request->email)->firstOrFail();
-        
-        if($user->authenticate($request->password)) {
-            return new UserResource($user);
+        $user = User::where('email', $request->email)->first();
+
+        if ($user != null) {
+            if ($user->authenticate($request->password)) {
+                return new UserResource($user);
+            }
         }
 
         return response(['error' => 'Invalid email or password'], 401);

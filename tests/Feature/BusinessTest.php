@@ -17,6 +17,9 @@ class BusinessTest extends TestCase
     {
         parent::setUp();
 
+        Deal::disableSearchSyncing();
+        Business::disableSearchSyncing();
+
         $this->app->extend(Client::class, function ($client) {
             $mockClient = Mockery::mock($client)
                 ->shouldReceive('get')
