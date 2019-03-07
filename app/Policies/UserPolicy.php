@@ -11,6 +11,6 @@ class UserPolicy
 
     public function update(User $user)
     {
-        return $user->authenticate(request()->password) && $user->email === request()->email;
+        return $user->authenticate(request()->current_password);
     }
 }

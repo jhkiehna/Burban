@@ -26,7 +26,7 @@ class UserTest extends TestCase
 
         $response = $this->withHeaders([
             'Authorization' => 'Bearer '. 'asfsafsadfasf'
-    ])->json('GET', '/user/logout');
+        ])->json('GET', '/user/logout');
 
         $response->assertStatus(401);
     }
@@ -59,16 +59,15 @@ class UserTest extends TestCase
     public function testItCanUpdateAUsersPassword()
     {
         $user = factory(User::class)->create([
-            'email' => 'testEmail@test.com',
-            'password' => Hash::make('oldTestPassword')
+            'password' => Hash::make('currentTestPassword')
         ]);
 
         $response = $this->actingAs($user)->json('PATCH', '/user/updatePassword', [
-            'email' => 'testEmail@test.com',
-            'new_password' => 'newTestPassword',
-            'password' => 'oldTestPassword',
-            'password_confirmation' => 'oldTestPassword'
+            'current_password' => 'currentTestPassword',
+            'password' => 'newTestPassword',
+            'password_confirmation' => 'newTestPassword'
         ]);
+        $user->refresh();
 
         $response->assertStatus(200);
         $response->assertJsonFragment(['email' => $user->email]);
@@ -78,32 +77,28 @@ class UserTest extends TestCase
     public function testItCantUpdatePasswordWhenCurrentPasswordIsInvalid()
     {
         $user = factory(User::class)->create([
-            'email' => 'testEmail@test.com',
-            'password' => Hash::make('oldTestPassword')
+            'password' => Hash::make('currentTestPassword')
         ]);
 
         $response = $this->actingAs($user)->json('PATCH', '/user/updatePassword', [
-            'email' => 'testEmail@test.com',
-            'new_password' => 'newTestPassword',
-            'password' => 'badPassword',
-            'password_confirmation' => 'badPassword'
+            'current_password' => 'badPassword',
+            'password' => 'newTestPassword',
+            'password_confirmation' => 'newTestPassword'
         ]);
 
         $response->assertStatus(403);
-        $this->assertTrue(Hash::check('oldTestPassword', $user->password));
+        $this->assertTrue(Hash::check('currentTestPassword', $user->password));
     }
 
     public function testItCanUpdateAUsersEmail()
     {
         $user = factory(User::class)->create([
-            'email' => 'oldTestEmail@test.com',
             'password' => Hash::make('testPassword')
         ]);
 
         $response = $this->actingAs($user)->json('PATCH', '/user/updateEmail', [
-            'email' => 'oldTestEmail@test.com',
+            'current_password' => 'testPassword',
             'new_email' => 'updatedTestEmail@test.com',
-            'password' => 'testPassword',
         ]);
 
         $user->refresh();
@@ -121,9 +116,8 @@ class UserTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->json('PATCH', '/user/updateEmail', [
-            'email' => 'oldTestEmail@test.com',
-            'new_email' => 'updatedTestEmail@test.com',
             'password' => 'badPassword',
+            'new_email' => 'updatedTestEmail@test.com',
         ]);
 
         $response->assertStatus(403);

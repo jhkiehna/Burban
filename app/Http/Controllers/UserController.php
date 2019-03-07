@@ -17,7 +17,7 @@ class UserController extends Controller
         $this->authorize('update', $user);
 
         $user->update([
-            'password' => Hash::make($request->new_password)
+            'password' => Hash::make($request->password)
         ]);
 
         return new UserResource($user);
