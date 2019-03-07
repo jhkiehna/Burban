@@ -129,4 +129,16 @@ class UserTest extends TestCase
         $response->assertStatus(403);
         $this->assertDatabaseHas('users', ['email' => 'oldTestEmail@test.com']);
     }
+
+    public function testUserIsUnauthorizedUnlessTheirEmailIsVerified()
+    {
+        $user = factory(User::class)->create([
+            'email_verified' => false,
+            'email_verified_at' => null,
+        ]);
+
+        $response = $this->actingAs($user)->json('GET', '/deals/saved');
+
+        $response->assertStatus(403);
+    }
 }

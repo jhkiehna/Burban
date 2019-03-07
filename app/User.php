@@ -2,16 +2,16 @@
 
 namespace App;
 
-use App\Deal;
 use App\Business;
 use App\SavedDeal;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Hash;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, SoftDeletes;
 
@@ -21,6 +21,15 @@ class User extends Authenticatable
 
     protected $hidden = [
         'password',
+    ];
+
+    protected $dates = [
+        'email_verified_at',
+    ];
+
+    protected $casts = [
+        'email_verified' => 'boolean',
+        'business_user' => 'boolean',
     ];
 
     public function isBusinessUser()
@@ -61,5 +70,12 @@ class User extends Authenticatable
         }
         
         return false;
+    }
+
+    public function setEmailVerified()
+    {
+        $this->email_verified = true;
+        $this->email_verified_at = Carbon::now();
+        $this->save();
     }
 }

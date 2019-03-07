@@ -4,18 +4,21 @@ namespace Tests\Feature;
 
 use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserEmailVerificationTest extends TestCase
 {
     public function testEndpointCanVerifyAUsersEmail()
     {
-        $user = factory(User::class)->create();
+        $user = factory(User::class)->create([
+            'email_verified' => false,
+            'email_verified_at' => null
+        ]);
 
-        $response = $this->json('GET', '/users/verifyEmail?token=' . $user->api_token);
+        $response = $this->json('GET', '/user/verify-email?api_token=' . $user->api_token);
+        $user->refresh();
 
-        // $response->assertStatus(200);
-        // $this->assertDatabaseHas('users', ['email_verified' => true]);
-        $this->assertTrue(true);
+        $response->assertStatus(200);
+        $this->assertTrue($user->email_verified);
+        $this->assertNotNull($user->email_verified_at);
     }
 }
