@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\User;
 use App\Business;
 use App\SavedDeal;
 use Laravel\Scout\Searchable;
@@ -30,15 +29,18 @@ class Deal extends Model
         return $this->belongsTo(Business::class);
     }
 
-    public function savedDeals()
-    {
-        return $this->belongsToMany(SavedDeal::class);
-    }
-
     public static function forUser($user)
     {
         return self::whereHas('savedDeals', function($query) use ($user){
             $query->where('user_id', $user->id);
         });
+    }
+
+    public function delete()
+    {
+        $savedDeals = SavedDeal::where('deal_id', $this->id)->get();
+        $savedDeals->each->delete();
+
+        parent::delete();
     }
 }

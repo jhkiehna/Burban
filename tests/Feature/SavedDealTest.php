@@ -23,7 +23,7 @@ class SavedDealTest extends TestCase
     {
         $user = factory(User::class)->create();
         $deal = factory(Deal::class)->create();
-        $savedDeal = SavedDeal::create([
+        SavedDeal::create([
             'user_id' => $user->id,
             'deal_id' => $deal->id,
         ]);
@@ -38,7 +38,7 @@ class SavedDealTest extends TestCase
     {
         $user1 = factory(User::class)->create();
         $deal = factory(Deal::class)->create();
-        $savedDeal = SavedDeal::create([
+        SavedDeal::create([
             'user_id' => $user1->id,
             'deal_id' => $deal->id,
         ]);

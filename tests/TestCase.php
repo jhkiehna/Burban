@@ -2,8 +2,6 @@
 
 namespace Tests;
 
-use App\Deal;
-use App\Business;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 

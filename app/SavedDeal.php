@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SavedDeal extends Model
 {
+    protected $table = 'saved_deals';
+
     protected $fillable = [
         'user_id',
         'deal_id',
