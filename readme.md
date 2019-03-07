@@ -70,4 +70,11 @@ Generate a new Laravel App key.
 `$ php artisan migrate`
 
 ## API Documentation
+
 API documentation here
+
+### Endpoints
+
+#### User Endpoints
+
+`/user/login` - POST - 
