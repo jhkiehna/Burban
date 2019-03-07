@@ -38,7 +38,7 @@ class Deal extends Model
 
     public function delete()
     {
-        $savedDeals = SavedDeal::where('deal_id', $this->id)->delete();
+        SavedDeal::where('deal_id', $this->id)->delete();
 
         parent::delete();
     }

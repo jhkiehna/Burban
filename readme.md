@@ -27,12 +27,11 @@ Dont run the testsuite unless you have a separate .env.testing file that points 
 
 Edit .env with correct environment variables.
 
-You'll need to update the APP_NAME, APP_ENV, APP_DEBUG, APP_URL, AND FRONTEND_URL variables accordingly.
+You'll need to update the `APP_NAME`, `APP_ENV`, `APP_DEBUG`, `APP_URL`, AND `FRONTEND_URL` variables accordingly.
 
 ```
 APP_NAME='Burban API'
 APP_ENV=production
-APP_KEY=
 APP_DEBUG=false
 APP_URL='http://api.example.com'
 FRONTEND_URL='https://example.com'
@@ -40,7 +39,7 @@ FRONTEND_URL='https://example.com'
 
 You'll also need to update the DB variables to match the database on the server.
 
-Laravel has built-in drivers for mysql, sqlite, and prostgresql databases. The database driver can be easily changed with the `DB_CONECTION` env variable.
+Laravel has built-in drivers for `mysql`, `sqlite`, and `pgsql` databases. The database driver can be easily changed with the `DB_CONECTION` env variable.
 
 ```
 DB_CONNECTION=mysql
@@ -63,7 +62,7 @@ GOOGLE_API_KEY='googleAPIkey'
 
 If you plan to send emails from the API, then these values will need to be set as well
 
-Laravel has built in drivers for mailgun, mandrill, sparkpost, and ses as well.
+Laravel has built in drivers for `mailgun`, `mandrill`, `sparkpost`, and `ses` as well.
 
 ```
 MAIL_DRIVER=smtp
