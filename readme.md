@@ -90,4 +90,118 @@ API documentation here
 
 #### User Endpoints
 
-`/user/login` - POST - 
+-- `/user/login`
+
+"POST"
+
+Body
+* `email`
+    required,
+    valid email,
+    max characters: 255
+* `password`
+    required,
+    string,
+    min characters: 8
+    max characters: 255
+
+-----------------------------------------
+
+-- `/user/register`
+
+"POST"
+
+Body
+* `email`
+    required,
+    valid email,
+    unique email,
+    max characters: 255
+* `password`
+    required,
+    string,
+    min characters: 8
+    max characters: 255
+* `password_confirmation`
+    required,
+    string,
+    min characters: 8
+    max characters: 255
+    must match password field
+
+-----------------------------------------
+
+-- `/user/updatePassword`
+
+"PATCH"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+Body
+* `current_password`
+    The user's current password,
+    required,
+    string,
+    max characters: 255
+
+* `password`
+    The user's newly chosen password,
+    required,
+    string,
+    min characters: 8
+    max characters: 255
+
+* `password_confirmation`
+    required,
+    string,
+    min characters: 8
+    max characters: 255
+    must match password field
+
+-----------------------------------------
+
+-- `/user/updateEmail`
+
+"PATCH"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+Body
+* `current_password`
+    required,
+    string,
+    min characters: 8
+    max characters: 255
+* `new_email`
+    required,
+    string,
+    valid email,
+    max characters: 255
+
+-----------------------------------------
+
+-- `/user/logout`
+
+"GET"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+-----------------------------------------
+
+`/user/delete`
+
+"DELETE"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+Body
+* `password`
+    required,
+    string,
+    max characters: 255
+
+-----------------------------------------

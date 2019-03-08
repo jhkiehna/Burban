@@ -28,7 +28,7 @@ class SavedDealTest extends TestCase
             'deal_id' => $deal->id,
         ]);
 
-        $response = $this->actingAs($user)->json('GET', '/deals/saved');
+        $response = $this->withHeaders(['HTTP_Authorization' => 'Bearer '. $user->api_token])->json('GET', '/deals/saved');
 
         $response->assertStatus(200);
         $response->assertJsonFragment(['title' => $deal->title]);
