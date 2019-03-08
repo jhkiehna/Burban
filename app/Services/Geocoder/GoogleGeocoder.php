@@ -27,7 +27,8 @@ class GoogleGeocoder
             $this->getResponse($query)
         );
 
-        return $response['results'][0]['place_id'];
+        // return $response['results'][0]['place_id'];
+        return $response['results'][0]['geometry']['location'];
     }
 
     private function addOptionalQueryParameters($language, $region)

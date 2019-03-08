@@ -20,7 +20,7 @@ class CreateBusinessesTable extends Migration
             $table->string('street_address');
             $table->string('city');
             $table->string('state', 2);
-            $table->string('place_id')->nullable();
+            $table->json('coordinates')->nullable();
             $table->string('phone');
             $table->string('summary');
             $table->string('image')->nullable();

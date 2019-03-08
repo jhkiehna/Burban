@@ -21,6 +21,10 @@ class Business extends Model
         'phone',
         'summary',
     ];
+
+    protected $casts = [
+        'coordinates' => 'array',
+    ];
     
     protected $algoliaIndex = 'businesses_index';
 
@@ -53,7 +57,7 @@ class Business extends Model
 
         $address = $business->street_address . '\n' . $business->city . ', ' . $business->state;
 
-        $business->place_id = (new GoogleGeocoder())->geocode($address);
+        $business->coordinates = (new GoogleGeocoder())->geocode($address);
         $business->save();
 
         return $business;

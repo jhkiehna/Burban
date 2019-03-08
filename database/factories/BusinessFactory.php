@@ -22,7 +22,7 @@ $factory->define(Business::class, function (Faker $faker) {
         'street_address' => $faker->streetAddress(),
         'city' => $faker->city(),
         'state' => $faker->stateAbbr(),
-        'place_id' => $faker->md5(),
+        'coordinates' => ['lat' => $faker->latitude(), 'lng' => $faker->longitude()],
         'phone' => $faker->phoneNumber(),
         'summary' => $faker->sentences(3, true),
         'image' => $faker->url(),

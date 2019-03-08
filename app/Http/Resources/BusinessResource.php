@@ -20,7 +20,7 @@ class BusinessResource extends JsonResource
             'street_address' => $this->street_address,
             'city' => $this->city,
             'state' => $this->state,
-            'place_id' => $this->place_id,
+            'coordinates' => $this->coordinates,
             'phone' => $this->phone,
             'summary' => $this->summary,
             'image' => $this->image,

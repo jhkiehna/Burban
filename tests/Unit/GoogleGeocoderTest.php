@@ -36,7 +36,10 @@ class GoogleGeocoderTest extends TestCase
         
         $response = $geocoder->geocode('asheville');
 
-        $this->assertEquals($response, 'ChIJCW8PPKmMWYgRXTo0BsEx75Q');
+        $this->assertEquals($response, [
+            "lat" => 35.5950581,
+            "lng" => -82.5514869,
+          ]);
     }
 
     public function testItCanAddTheOptionalArguments()
