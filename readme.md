@@ -463,3 +463,17 @@ This probably shouldn't be used in production. Email addresses should be verifie
 A User cannot create a business unless they are a business user. There is currently no endpoint that will make a user a business user. 
 
 Going into the database, finding that user, and setting the `business_user` column to `true` will make them a business user, and they will then be able to create their business.
+
+### Geocoding
+
+When a business is created, the address used will be geocoded via Google's Geocoding API, and latitude and longitude coordinates will be returned and saved in the database.
+
+These coordinates can be used to determine nearby businesses to the user.
+
+[Google Geocoding API docs](https://developers.google.com/maps/documentation/geocoding/intro)
+
+### Algolia
+
+Anytime a record is created or updated, it is indexed in Algolia. Algolia provides fast searching of records. This would be useful if search was implemented. Algolia also supports geolocation via the coordinates of a business.
+
+[Algolia Geolocation Docs](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/)
