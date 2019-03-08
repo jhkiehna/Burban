@@ -204,7 +204,7 @@ Headers:
 
 -- `/user/delete`
 
-Delete a user
+Deletes a user
 
 "DELETE"
 
@@ -235,7 +235,7 @@ Query String Parameter:
 
 -- `/businesses`
 
-Create a new business
+A business user Creates a new business
 
 "POST"
 
@@ -273,7 +273,7 @@ Body
 
 -- `/businesses/{businessId}`
 
-Returns a single business
+Anyone Returns a single business
 
 "GET"
 
@@ -320,12 +320,127 @@ A Business User can delete their business
 Headers:
 `['HTTP_Authorization': 'Bearer {usersAPItoken}']`
 
------------------------------------------
+
+#### Deals Endpoints
 
 -- `/businesses/{businessId}/deals`
 
-Return all deals that belong to a business
+Anyone Return all deals that belong to a business
 
 "GET"
 
-#### Business Endpoints
+-----------------------------------------
+
+-- `/deals`
+
+Anyone return all deals
+
+"GET"
+
+-----------------------------------------
+
+-- `/deals/{dealId}`
+
+Anyone Return a single deal
+
+"GET"
+
+-----------------------------------------
+
+-- `/deals`
+
+A business user Creates a new deal
+
+"POST"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+Body
+* `title`
+    required,
+    string,
+    max characters: 255
+* `description`
+    required,
+    string,
+    max characters: 255
+* `start_date`
+    required,
+    valid date (format: YYYY-MM-DD),
+    after or equal to today,
+    before or equal to `end_date`
+* `end_date`
+    required,
+    valid date (format: YYYY-MM-DD),
+    after or equal to `end_date`
+
+-----------------------------------------
+
+-- `/deals/{dealId}`
+
+A business user Updates an existing deal
+
+"PATCH"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+Body
+* `title`
+    string,
+    max characters: 255
+* `description`
+    string,
+    max characters: 255
+* `start_date`
+    valid date (format: YYYY-MM-DD),
+    before or equal to `end_date`
+* `end_date`
+    valid date (format: YYYY-MM-DD),
+    after or equal to `end_date`
+
+-----------------------------------------
+
+-- `/deals/{dealId}`
+
+A business user Deletes a deal
+
+"DELETE"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+-----------------------------------------
+
+-- `/deals/saved`
+
+A user gets their saved deals
+
+"GET"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+-----------------------------------------
+
+-- `/deals/saved`
+
+A user saves a deal
+
+"POST"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+-----------------------------------------
+
+-- `/deals/saved/{dealId}`
+
+A user deletes a saved deal
+This removes the deal from the user's saved deals list
+
+"DELETE"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
