@@ -7,6 +7,7 @@ use App\Deal;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Carbon\Carbon;
 
 class DealTest extends TestCase
 {
@@ -26,6 +27,21 @@ class DealTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonFragment(['description' => $deal->description]);
+    }
+
+    public function testItDoesntReturnDealsThatHaveEnded()
+    {
+        list($deal1, $deal2) = factory(Deal::class, 2)->create([
+            'start_date' => Carbon::now()->subDays(7),
+            'end_date' => Carbon::now()->subDays(1),
+        ]);
+        $deal1->update(['end_date' => Carbon::now()->addDays(7)]);
+
+        $response = $this->json('GET', '/deals');
+
+        $response->assertStatus(200);
+        $response->assertJsonFragment([$deal1->description]);
+        $response->assertJsonMissing([$deal2->description]);
     }
 
     public function testItCanReturnASingleDeal()
@@ -57,7 +73,9 @@ class DealTest extends TestCase
 
         $response = $this->actingAs($business->user)->json('POST', '/deals', [
             'title' => 'testDeal',
-            'description' => 'test Description'
+            'description' => 'test Description',
+            'start_date' => Carbon::now()->toDateString(),
+            'end_date' => Carbon::now()->addDays(7)->toDateString(),
         ]);
 
         $response->assertStatus(201);

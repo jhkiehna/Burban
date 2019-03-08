@@ -15,6 +15,16 @@ class Deal extends Model
     protected $fillable = [
         'title',
         'description',
+        'start_date',
+        'end_date',
+    ];
+
+    protected $dates = [
+        'start_date',
+        'end_date',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
     
     protected $algoliaIndex = 'deals_index';

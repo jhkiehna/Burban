@@ -116,7 +116,7 @@ class UserTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->json('PATCH', '/user/updateEmail', [
-            'password' => 'badPassword',
+            'current_password' => 'badPassword',
             'new_email' => 'updatedTestEmail@test.com',
         ]);
 

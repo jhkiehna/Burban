@@ -3,6 +3,7 @@
 use App\Deal;
 use App\Business;
 use Faker\Generator as Faker;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +21,7 @@ $factory->define(Deal::class, function (Faker $faker) {
         'business_id' => factory(Business::class)->lazy(),
         'title' => $faker->sentence(2),
         'description' => $faker->sentence(6),
+        'start_date' => Carbon::now(),
+        'end_date' => Carbon::now()->addDays(7),
     ];
 });

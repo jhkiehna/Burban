@@ -18,6 +18,8 @@ class CreateDealsTable extends Migration
             $table->unsignedInteger('business_id');
             $table->string('title');
             $table->text('description');
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
             $table->timestamps();
 
             $table->softDeletes();
