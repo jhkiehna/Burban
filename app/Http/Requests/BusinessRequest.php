@@ -35,10 +35,12 @@ class BusinessRequest extends FormRequest
                     'phone' => [
                         'required',
                         'string',
+                        'max:255'
                     ],
                     'summary' => [
                         'required',
                         'string',
+                        'max:500'
                     ],
                 ];
                 break;
@@ -63,9 +65,11 @@ class BusinessRequest extends FormRequest
                     ],
                     'phone' => [
                         'string',
+                        'max:255'
                     ],
                     'summary' => [
                         'string',
+                        'max:500'
                     ],
                 ];
                 break;
@@ -96,9 +100,11 @@ class BusinessRequest extends FormRequest
 
             'phone.required' => 'You must specify a valid phone number for your business',
             'phone.string' => 'Phone is an invalid data type',
+            'phone.max' => 'Phone cannot be longer than 255 characters',
 
             'summary.required' => 'You must enter a summary/description for your business',
             'summary.string' => 'Summary is an invalid data type',
+            'summary.max' => 'Summary cannot be longer than 500 characters',
         ];
     }
 }

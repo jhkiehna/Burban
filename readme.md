@@ -92,6 +92,9 @@ API documentation here
 
 -- `/user/login`
 
+Login a user
+Returns a valid API Token for the user
+
 "POST"
 
 Body
@@ -108,6 +111,8 @@ Body
 -----------------------------------------
 
 -- `/user/register`
+
+Create a new user
 
 "POST"
 
@@ -132,6 +137,8 @@ Body
 -----------------------------------------
 
 -- `/user/updatePassword`
+
+Update a user's password
 
 "PATCH"
 
@@ -163,6 +170,8 @@ Body
 
 -- `/user/updateEmail`
 
+Update a user's email
+
 "PATCH"
 
 Headers:
@@ -184,6 +193,8 @@ Body
 
 -- `/user/logout`
 
+Logout a user
+
 "GET"
 
 Headers:
@@ -191,7 +202,9 @@ Headers:
 
 -----------------------------------------
 
-`/user/delete`
+-- `/user/delete`
+
+Delete a user
 
 "DELETE"
 
@@ -205,3 +218,114 @@ Body
     max characters: 255
 
 -----------------------------------------
+
+-- `/user/verify-email?api_token={usersAPItoken}`
+
+This route exists to verify a user has a valid email address.
+When a new user registers, a link would be send to their email address containing their api token.
+
+"GET"
+
+Query String Parameter:
+`api_token={usersAPItoken}`
+
+-----------------------------------------
+
+#### Business Endpoints
+
+-- `/businesses`
+
+Create a new business
+
+"POST"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+Body
+* `name`
+    required,
+    string,
+    unique,
+    max characters: 255
+* `street_address`
+    required,
+    string,
+    max characters: 255
+* `city`
+    required,
+    string,
+    max characters: 255
+* `state`
+    required,
+    string,
+    max characters: 2
+* `phone`
+    required,
+    string,
+    max characters: 255
+* `summary`
+    required,
+    string,
+    max characters: 500
+
+-----------------------------------------
+
+-- `/businesses/{businessId}`
+
+Returns a single business
+
+"GET"
+
+-----------------------------------------
+
+-- `/businesses/{businessId}`
+
+A Business User can update their business
+
+"PATCH"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+Body
+* `name`
+    string,
+    unique,
+    max characters: 255
+* `street_address`
+    string,
+    max characters: 255
+* `city`
+    string,
+    max characters: 255
+* `state`
+    string,
+    max characters: 2
+* `phone`
+    string,
+    max characters: 255
+* `summary`
+    string,
+    max characters: 500
+
+-----------------------------------------
+
+-- `/businesses/{businessId}`
+
+A Business User can delete their business
+
+"DELETE"
+
+Headers:
+`['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+-----------------------------------------
+
+-- `/businesses/{businessId}/deals`
+
+Return all deals that belong to a business
+
+"GET"
+
+#### Business Endpoints
