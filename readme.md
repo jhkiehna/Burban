@@ -444,3 +444,22 @@ This removes the deal from the user's saved deals list
 
 Headers:
 `['HTTP_Authorization': 'Bearer {usersAPItoken}']`
+
+### Email verification
+
+There are events set up to send an email when a new user registers in order to verify they have used a valid email address. Until email is set up with a third part service such as mailgun or sparkpost, this
+email will not get sent.
+
+Email address for a user can be manually validated by making a GET request to this endpoint
+
+`/user/verify-email?api_token={usersAPItoken}`
+
+Where {usersAPItoken} is the user's api token.
+
+This probably shouldn't be used in production. Email addresses should be verified.
+
+### Business Users
+
+A User cannot create a business unless they are a business user. There is currently no endpoint that will make a user a business user. 
+
+Going into the database, finding that user, and setting the `business_user` column to `true` will make them a business user, and they will then be able to create their business.
