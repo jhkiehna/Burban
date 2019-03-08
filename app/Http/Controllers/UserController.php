@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserEmailChangeRequest;
 use App\Http\Requests\UserPasswordChangeRequest;
+use App\Http\Requests\UserDeleteRequest;
 
 class UserController extends Controller
 {
@@ -35,9 +36,10 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function destroy()
+    public function destroy(UserDeleteRequest $request)
     {
         $user = auth()->user();
+        $this->authorize('delete', $user);
         $user->api_token = null;
         $user->delete();
 

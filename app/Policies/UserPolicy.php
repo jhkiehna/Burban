@@ -13,4 +13,9 @@ class UserPolicy
     {
         return $user->authenticate(request()->current_password);
     }
+
+    public function delete(User $user)
+    {
+        return $user->authenticate(request()->password);
+    }
 }

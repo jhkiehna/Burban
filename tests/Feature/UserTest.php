@@ -33,13 +33,34 @@ class UserTest extends TestCase
 
     public function testItCanDeleteAUser()
     {
-        $user = factory(User::class)->create();
+        $user = factory(User::class)->create([
+            'password' => Hash::make('testPass')
+        ]);
+        $data = [
+            'password' => 'testPass'
+        ];
 
-        $response = $this->actingAs($user)->json('DELETE', '/user/delete');
+        $response = $this->actingAs($user)->json('DELETE', '/user/delete', $data);
         $user->refresh();
 
         $response->assertStatus(204);
         $this->assertTrue($user->deleted_at != null);
+    }
+
+    public function testItCantDeleteAUserUnlessPasswordIsCorrect()
+    {
+        $user = factory(User::class)->create([
+            'password' => Hash::make('testPass')
+        ]);
+        $data = [
+            'password' => 'badPass'
+        ];
+
+        $response = $this->actingAs($user)->json('DELETE', '/user/delete', $data);
+        $user->refresh();
+
+        $response->assertStatus(403);
+        $this->assertTrue($user->deleted_at == null);
     }
 
     public function testItCantDeleteAUserWithTheWrongToken()
